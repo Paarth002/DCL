@@ -119,9 +119,13 @@ class create_knowledge(nn.Module):
         #     knowledge_input_ids = concat_all_gather(knowledge.input_ids)
         #     knowledge_attention_mask = concat_all_gather(knowledge.attention_mask)
         # else:
-        text_feats = text_feat
-        knowledge_input_ids = knowledge.input_ids
-        knowledge_attention_mask = knowledge.attention_mask
+            # text_feats = text_feat
+            # knowledge_input_ids = knowledge.input_ids
+            # knowledge_attention_mask = knowledge.attention_mask
+
+        text_feats = concat_all_gather(text_feat)
+        knowledge_input_ids = concat_all_gather(knowledge.input_ids)
+        knowledge_attention_mask = concat_all_gather(knowledge.attention_mask)
 
         batch_size = text_feats.shape[0]
 
