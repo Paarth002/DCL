@@ -123,14 +123,18 @@ class create_knowledge(nn.Module):
             # knowledge_input_ids = knowledge.input_ids
             # knowledge_attention_mask = knowledge.attention_mask
 
-        text_feats = concat_all_gather(text_feat)
-        knowledge_input_ids = concat_all_gather(knowledge.input_ids)
-        knowledge_attention_mask = concat_all_gather(knowledge.attention_mask)
+        text_feats = text_feat
+        knowledge_input_ids = knowledge.input_ids
+        knowledge_attention_mask = knowledge.attention_mask
 
         batch_size = text_feats.shape[0]
 
         ptr = int(self.queue_ptr)
-        assert self.queue_size % batch_size == 0  # for simplicity
+        # assert self.queue_size % batch_size == 0  # for simplicity
+        print('\n\n\n\n')
+        print('queue size:', self.queue_size)
+        print('batch size:', batch_size)
+        print('\n\n\n\n')
 
         # replace the keys at ptr (dequeue and enqueue)
         self.text_queue[:, ptr:ptr + batch_size] = text_feats.T
