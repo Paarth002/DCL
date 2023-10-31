@@ -57,6 +57,7 @@ def main(args, config):
     lr_scheduler = build_lr_scheduler(args, optimizer)
 
     # build trainer and start to train
+    torch.nn.parallel.is_distributed = True ###
     trainer = Trainer(model, criterion, metrics, optimizer, args, lr_scheduler, train_dataloader, val_dataloader, test_dataloader, tokenizer)
     trainer.train()
 
