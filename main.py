@@ -24,7 +24,7 @@ def main(args, config):
 
     ##############
     # print(args.n_gpu, end='\n\n\n\n')
-    torch.cuda.set_device('gpu')
+    torch.cuda.set_device('cuda:0')
     args.dist_backend = 'nccl'
     print('| distributed init (rank {}, word {}): {}'.format(
         args.rank, args.world_size, args.dist_url), flush=True)
