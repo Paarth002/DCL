@@ -24,14 +24,7 @@ def main(args, config):
 
     ##############
     # print(args.n_gpu, end='\n\n\n\n')
-    torch.cuda.set_device('cuda:0')
-    args.dist_backend = 'nccl'
-    print('| distributed init (rank {}, word {}): {}'.format(
-        args.rank, args.world_size, args.dist_url), flush=True)
-    torch.distributed.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
-                                            world_size=args.world_size, rank=args.rank)
-    torch.distributed.barrier()
-    setup_for_distributed(args.rank == 0)  
+    
 
     #############
 
@@ -178,6 +171,15 @@ if __name__ == '__main__':
                         help='the dataset to be used.')
     parser.add_argument('--concat', default=False, type=bool)
     args = parser.parse_args()
+
+    torch.cuda.set_device('cuda:0')
+    args.dist_backend = 'nccl'
+    print('| distributed init (rank {}, word {}): {}'.format(
+        args.rank, args.world_size, args.dist_url), flush=True)
+    torch.distributed.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
+                                            world_size=args.world_size, rank=args.rank)
+    torch.distributed.barrier()
+    setup_for_distributed(args.rank == 0)  
 
     yml = yaml.YAML(typ='rt')
     config = yml.load(open(args.config, 'r'))
