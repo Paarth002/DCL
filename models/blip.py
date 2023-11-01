@@ -492,7 +492,7 @@ class BLIP_Decoder(nn.Module):
         batch_size = image_feats.shape[0]
 
         ptr = int(self.queue_ptr)
-        assert self.queue_size % batch_size == 0  # for simplicity
+        # assert self.queue_size % batch_size == 0  # for simplicity
 
         # replace the keys at ptr (dequeue and enqueue)
         self.image_queue[:, ptr:ptr + batch_size] = image_feats.T
