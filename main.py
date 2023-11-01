@@ -185,5 +185,5 @@ if __name__ == '__main__':
     yml = yaml.YAML(typ='rt')
     config = yml.load(open(args.config, 'r'))
     # config = yaml.YAML(open(args.config, 'r'))
-
+    torch.autograd.set_detect_anomaly(True)
     main(args, config)
