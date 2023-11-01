@@ -88,7 +88,7 @@ class BertEmbeddings(nn.Module):
 
         if self.position_embedding_type == "absolute":
             position_embeddings = self.position_embeddings(position_ids)
-            embeddings += position_embeddings
+            embeddings = embeddings + position_embeddings
         embeddings = self.LayerNorm(embeddings)
         embeddings = self.dropout(embeddings)
         return embeddings
@@ -953,5 +953,5 @@ class BertLMHeadModel(BertPreTrainedModel):
     def _reorder_cache(self, past, beam_idx):
         reordered_past = ()
         for layer_past in past:
-            reordered_past += (tuple(past_state.index_select(0, beam_idx) for past_state in layer_past),)
+            reordered_past = reordered_past + (tuple(past_state.index_select(0, beam_idx) for past_state in layer_past),)
         return reordered_past
