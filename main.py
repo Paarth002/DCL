@@ -23,8 +23,8 @@ def main(args, config):
     np.random.seed(args.seed)
 
     ##############
-    print(args.n_gpu, end='\n\n\n\n')
-    torch.cuda.set_device(args.n_gpu)
+    # print(args.n_gpu, end='\n\n\n\n')
+    torch.cuda.set_device('gpu')
     args.dist_backend = 'nccl'
     print('| distributed init (rank {}, word {}): {}'.format(
         args.rank, args.world_size, args.dist_url), flush=True)
