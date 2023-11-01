@@ -12,7 +12,7 @@ from models.blip import blip_decoder
 from blip_original import create_loader, create_dataset
 import os
 from transformers import AutoTokenizer, AutoModel
-
+from utils import setup_for_distributed
 
 
 def main(args, config):
@@ -22,8 +22,20 @@ def main(args, config):
     torch.backends.cudnn.benchmark = False
     np.random.seed(args.seed)
 
-    # create tokenizer
+    ##############
+    print(args.gpu, end='\n\n\n\n')
+    torch.cuda.set_device(args.gpu)
+    args.dist_backend = 'nccl'
+    print('| distributed init (rank {}, word {}): {}'.format(
+        args.rank, args.world_size, args.dist_url), flush=True)
+    torch.distributed.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
+                                            world_size=args.world_size, rank=args.rank)
+    torch.distributed.barrier()
+    setup_for_distributed(args.rank == 0)  
 
+    #############
+
+     # create tokenizer
     if args.bert == 'base':
         tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
     elif args.bert == 'sci':
