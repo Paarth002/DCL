@@ -174,8 +174,9 @@ if __name__ == '__main__':
 
     torch.cuda.set_device('cuda:0')
     args.dist_backend = 'nccl'
-    print('| distributed init (rank {}, word {}): {}'.format(
-        args.rank, args.world_size, args.dist_url), flush=True)
+    # print('| distributed init (rank {}, word {}): {}'.format(
+    #     args.rank, args.world_size, args.dist_url), flush=True)
+    args.rank = 0
     torch.distributed.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
                                             world_size=args.world_size, rank=args.rank)
     torch.distributed.barrier()
