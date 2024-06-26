@@ -75,18 +75,27 @@ if __name__ == '__main__':
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
     parser.add_argument('--distributed', default=True, type=bool)
 
+    # parser.add_argument('--image_dir', type=str,
+    #                     default='./dataset/iu_xray/images&./dataset/MIMIC-CXR/mimic_cxr/images',
+    #                     help='the path to the directory containing the data.')
+    # parser.add_argument('--ann_path', type=str,
+    #                     default='./annotations/iu-annotation.json&./annotations/mimic_annotation.json',
+    #                     help='the path to the directory containing the data.')
+    # parser.add_argument('--knowledge_path', type=str,
+    #                     default='./annotations/iu_train_kg_AO.json&./annotations/mimic_train_kg_AO.json',
+    #                     help='the path to the directory containing the data.')
     parser.add_argument('--image_dir', type=str,
-                        default='./dataset/iu_xray/images&./dataset/MIMIC-CXR/mimic_cxr/images',
+                        default='',
                         help='the path to the directory containing the data.')
     parser.add_argument('--ann_path', type=str,
-                        default='./annotations/iu-annotation.json&./annotations/mimic_annotation.json',
+                        default='./annotations/covctr-annotation.json',
                         help='the path to the directory containing the data.')
     parser.add_argument('--knowledge_path', type=str,
-                        default='./annotations/iu_train_kg_AO.json&./annotations/mimic_train_kg_AO.json',
+                        default='./annotations/covctr-annotation.json',
                         help='the path to the directory containing the data.')
 
     # Data loader settings
-    parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr'],
+    parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr', 'covctr'],
                         help='the dataset to be used.')
     parser.add_argument('--max_seq_length', type=int, default=90, help='the maximum sequence length of the reports.')
     parser.add_argument('--threshold', type=int, default=3, help='the cut off frequency for the words.')
